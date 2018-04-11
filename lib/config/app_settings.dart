@@ -94,7 +94,7 @@ class InMemoryAppSettings extends AppSettingsProvider<Object> {
     _valuesCache[key] = value;
   }
 
-  String stringValue(String key, {String defaultValue = null}) {
+  String stringValue(String key, {String defaultValue}) {
     Object val = _valuesCache[key];
     if (val == null || !(val is String)) {
       return defaultValue;
@@ -149,9 +149,9 @@ class PersistedAppSettings extends InMemoryAppSettings {
     await super.persist();
     Map<String, Object> jsonObject = _processInputMap(
         source: _valuesCache, encodeType: SettingsEncodeType.encode);
-    String json = JSON.encode(jsonObject);
+    String jsonString = json.encode(jsonObject);
     File settingsFile = await _getLocalFile();
-    await settingsFile.writeAsString(json).catchError((err) {
+    await settingsFile.writeAsString(jsonString).catchError((err) {
       print("Settings write failed: $err");
       return SettingsPersistStatus.fail;
     });
@@ -229,7 +229,7 @@ class PersistedAppSettings extends InMemoryAppSettings {
     if (fileExists) {
       String jsonString = await settingsFile.readAsString();
       if (jsonString.length > 0) {
-        Map<String, Object> jsonObj = JSON.decode(jsonString);
+        Map<String, Object> jsonObj = json.decode(jsonString);
         if (jsonObj != null) {
           outMap = _processInputMap(
               source: jsonObj, encodeType: SettingsEncodeType.decode);
