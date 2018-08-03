@@ -27,7 +27,7 @@ class SnappingScrollPhysics extends ClampingScrollPhysics {
     final double offset = position.pixels;
 
     if (simulation != null) {
-      final double simulationEnd = simulation.x(double.INFINITY);
+      final double simulationEnd = simulation.x(double.infinity);
       if (simulationEnd >= midScrollOffset)
         return simulation;
       if (dragVelocity > 0.0)
