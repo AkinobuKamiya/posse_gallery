@@ -393,7 +393,7 @@ class _WarmWelcomeScreenState extends State<WarmWelcomeScreen>
             final PageMetrics metrics = notification.metrics;
             final int page = (metrics.pixels / screenWidth).floor();
             final offset = (metrics.pixels - (page * screenWidth))
-                .clamp(0, double.MAX_FINITE);
+                .clamp(0, double.maxFinite);
             _outAnimationControllers[page].value = (offset / screenWidth);
             if (page < (_inAnimationControllers.length - 1)) {
               _inAnimationControllers[page + 1].value = (offset / screenWidth);
